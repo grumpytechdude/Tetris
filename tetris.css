@@ -1,0 +1,16 @@
+#tetris {
+    display: grid;
+    grid-template-columns: repeat(10, 5px);
+}
+
+.cell {
+    border-color: black;
+    border-width: thin;
+    border-style: solid;
+    height: 5px;
+    width: 5px;
+}
+
+.cell[selected="true"] {
+    background-color: red;
+}
