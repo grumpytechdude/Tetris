@@ -63,7 +63,8 @@ async function run(board, config) {
 
     await sleep(config.speed);
     row++;
-    if (row === config.rows - 1 || stopped) {
+    console.log(row, config.rows)
+    if (row === config.rows - shape.height + 1|| stopped) {
       row = 0;
       start = config.start;
       shape = shape === shapes.square ? shapes.l : shapes.square;
