@@ -3,17 +3,17 @@ const tetris = document.getElementById("tetris");
 async function run(board, config) {
   let start = config.start;
 
-  document.addEventListener('keyup', function (event) {
+  document.addEventListener("keyup", function(event) {
     var charCode = event.key || event.keyCode;
     if ("ArrowRight" === charCode) {
       deselectShapeOnCurrentRow();
       start++;
-      selectShape()
+      selectShape();
     }
     if ("ArrowLeft" === charCode) {
       deselectShapeOnCurrentRow();
       start--;
-      selectShape()
+      selectShape();
     }
   });
 
@@ -43,11 +43,10 @@ async function run(board, config) {
     let cells = [];
     for (let shapePart of shape) {
       let cell = getCell(shapePart, row);
-      if (!cell.isSelected())
-        cells.push(cell);
+      if (!cell.isSelected()) cells.push(cell);
     }
     if (cells.length === shape.length) {
-      cells.forEach(cell => cell.select())
+      cells.forEach(cell => cell.select());
     } else {
       for (let shapePart of shape) {
         let cell = getCell(shapePart, row - 1);
@@ -63,11 +62,10 @@ async function run(board, config) {
 
     await sleep(config.speed);
     row++;
-    console.log(row, config.rows)
-    if (row === config.rows - shape.height + 1|| stopped) {
+    if (row === config.rows - shape.height + 1 || stopped) {
       row = 0;
       start = config.start;
-      shape = shape === shapes.square ? shapes.l : shapes.square;
+      shape = shapes.next()
     } else {
       deselectShapeOnPreviousRow();
     }
@@ -77,8 +75,8 @@ async function run(board, config) {
 }
 
 const board = createBoard(config, tetris);
-run(board, config)
-  .catch(error => {
-    const gameOver = document.getElementById("game-over");
-    gameOver.setAttribute("visible", "true")
-  });
+run(board, config).catch(error => {
+  const gameOver = document.getElementById("game-over");
+  gameOver.setAttribute("visible", "true");
+  console.log(error)
+});

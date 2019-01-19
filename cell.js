@@ -5,14 +5,14 @@ const createCell = function(row, column) {
 
   return {
     element: cellDiv,
-    select: function () {
+    select: function() {
       cellDiv.setAttribute("selected", `true`);
     },
-    deselect: function () {
+    deselect: function() {
       cellDiv.setAttribute("selected", `false`);
     },
-    isSelected: function () {
-      return cellDiv.getAttribute("selected") === "true"
+    isSelected: function() {
+      return cellDiv.getAttribute("selected") === "true";
     }
   };
 };
