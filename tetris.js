@@ -3,6 +3,20 @@ const tetris = document.getElementById("tetris");
 async function run(board, config) {
   let start = config.start;
 
+  document.addEventListener('keyup', function (event) {
+    var charCode = event.key || event.keyCode;
+    if ("ArrowRight" === charCode) {
+      deselectShapeOnCurrentRow();
+      start++;
+      selectShape()
+    }
+    if ("ArrowLeft" === charCode) {
+      deselectShapeOnCurrentRow();
+      start--;
+      selectShape()
+    }
+  });
+
   function getCell(shape, row) {
     return board[shape[0] + row][shape[1] + start];
   }
@@ -10,17 +24,23 @@ async function run(board, config) {
   let row = 0;
   let shape = shapes.square;
 
-  function deselectShape() {
+  function deselectShapeOnPreviousRow() {
     for (let shapePart of shape) {
       let cell = getCell(shapePart, row - 1);
       cell.deselect();
     }
   }
 
-  while (true) {
+  function deselectShapeOnCurrentRow() {
+    for (let shapePart of shape) {
+      let cell = getCell(shapePart, row);
+      cell.deselect();
+    }
+  }
 
-    let cells = [];
+  function selectShape() {
     let stopped = false;
+    let cells = [];
     for (let shapePart of shape) {
       let cell = getCell(shapePart, row);
       if (!cell.isSelected())
@@ -35,14 +55,20 @@ async function run(board, config) {
       }
       stopped = true;
     }
+    return stopped;
+  }
+
+  while (true) {
+    let stopped = selectShape();
 
     await sleep(config.speed);
     row++;
     if (row === config.rows - 1 || stopped) {
       row = 0;
+      start = config.start;
       shape = shape === shapes.square ? shapes.l : shapes.square;
     } else {
-      deselectShape();
+      deselectShapeOnPreviousRow();
     }
 
     console.log("tick");
