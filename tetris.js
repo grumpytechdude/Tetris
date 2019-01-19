@@ -50,4 +50,8 @@ async function run(board, config) {
 }
 
 const board = createBoard(config, tetris);
-run(board, config);
+run(board, config)
+  .catch(error => {
+    const gameOver = document.getElementById("game-over");
+    gameOver.setAttribute("visible", "true")
+  });

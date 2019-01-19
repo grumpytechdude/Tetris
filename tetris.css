@@ -14,3 +14,11 @@
 .cell[selected="true"] {
     background-color: red;
 }
+
+#game-over[visible="false"] {
+    display: none;
+}
+
+#game-over[visible="true"] {
+    display: block;
+}
