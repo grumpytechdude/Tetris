@@ -3,15 +3,16 @@ const createCell = function(row, column) {
   cellDiv.setAttribute("id", `cell-${row}-${column}`);
   cellDiv.setAttribute("class", `cell`);
 
-  const cell = {
+  return {
     element: cellDiv,
-    select: function() {
+    select: function () {
       cellDiv.setAttribute("selected", `true`);
     },
-    deselect: function() {
+    deselect: function () {
       cellDiv.setAttribute("selected", `false`);
+    },
+    isSelected: function () {
+      return cellDiv.getAttribute("selected") === "true"
     }
   };
-
-  return cell;
 };
